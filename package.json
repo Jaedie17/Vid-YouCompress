@@ -1,0 +1,22 @@
+{
+  "name": "vid-youcompress",
+  "version": "1.0.0",
+  "description": "A web-based video compression application using Node.js and FFmpeg",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "video",
+    "compression",
+    "ffmpeg"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "fluent-ffmpeg": "^2.1.3",
+    "multer": "^2.4.0"
+  }
+}

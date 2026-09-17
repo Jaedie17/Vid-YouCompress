@@ -1,0 +1,7 @@
+node_modules/
+uploads/*
+compressed/*
+.env
+.DS_Store
+Vid-YouCompress_System_Proposal.docx
+Vid-YouCompress_System_Proposal.pdf

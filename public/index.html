@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vid-YouCompress</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            Vid-YouCompress
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="hero">
+            <h1>Compress Your Videos</h1>
+
+            <p>
+                Reduce your video file size while maintaining good quality.
+            </p>
+        </section>
+
+
+        <section class="compress-card">
+
+            <div class="upload-area" id="uploadArea">
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <h2>Upload Your Video</h2>
+
+                <p>
+                    Select a video file to start compressing.
+                </p>
+
+                <input
+    type="file"
+    id="videoInput"
+    accept=".mp4,.avi,.mov"
+    hidden
+>
+
+                <button id="selectVideoBtn">
+                    Select Video
+                </button>
+
+                <p class="supported">
+                    Supported formats: MP4, AVI, MOV
+                </p>
+
+            </div>
+
+
+            <div class="video-info" id="videoInfo">
+
+                <h3>Selected Video</h3>
+
+                <p id="fileName">
+                    No video selected
+                </p>
+
+                <p id="fileSize">
+                    File size: -
+                </p>
+
+            </div>
+
+
+            <div class="settings">
+
+                <h3>Compression Settings</h3>
+
+                <label for="preset">
+                    Compression Quality
+                </label>
+
+                <select id="preset">
+
+                    <option value="high">
+                        High Quality
+                    </option>
+
+                    <option value="balanced" selected>
+                        Balanced
+                    </option>
+
+                    <option value="fast">
+                        Fast
+                    </option>
+
+                </select>
+
+
+                <label for="resolution">
+                    Resolution
+                </label>
+
+                <select id="resolution">
+
+                    <option value="1080">
+                        1080p
+                    </option>
+
+                    <option value="720" selected>
+                        720p
+                    </option>
+
+                    <option value="480">
+                        480p
+                    </option>
+
+                </select>
+
+
+                <button id="compressBtn">
+                    Compress Video
+                </button>
+
+            </div>
+
+
+            <div class="result" id="result" hidden>
+
+                <h3>Compression Result</h3>
+
+                <div class="result-info">
+
+                    <p>
+                        Original Size:
+                        <strong id="originalSize">-</strong>
+                    </p>
+
+                    <p>
+                        Compressed Size:
+                        <strong id="compressedSize">-</strong>
+                    </p>
+
+                    <p>
+                        Size Reduction:
+                        <strong id="reduction">-</strong>
+                    </p>
+
+                </div>
+
+
+                <video
+                    id="preview"
+                    controls
+                    hidden
+                ></video>
+
+
+                <button id="downloadBtn" hidden>
+                    Download Compressed Video
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
