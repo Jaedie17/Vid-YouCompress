@@ -103,7 +103,7 @@ app.post("/compress", upload.single("video"), (req, res) => {
         "libx264",
 
         "-preset",
-        "medium",
+        "veryfast",
 
         "-c:a",
         "aac",
