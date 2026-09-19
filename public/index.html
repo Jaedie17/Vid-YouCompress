@@ -63,18 +63,24 @@
 
             <div class="video-info" id="videoInfo">
 
-                <h3>Selected Video</h3>
+    <h3>Selected Video</h3>
 
-                <p id="fileName">
-                    No video selected
-                </p>
+    <p id="fileName">
+        No video selected
+    </p>
 
-                <p id="fileSize">
-                    File size: -
-                </p>
+    <p id="fileSize">
+        File size: -
+    </p>
 
-            </div>
+    <div id="uploadStatus" class="upload-toast" hidden>
+    <div class="upload-toast-icon">✓</div>
 
+    <div class="upload-toast-content">
+        <strong>Successfully uploaded!</strong>
+        <span>Ready to compress. Click "Compress Video" to continue.</span>
+    </div>
+</div>
 
             <div class="settings">
 
@@ -122,9 +128,21 @@
                 </select>
 
 
-                <button id="compressBtn">
-                    Compress Video
-                </button>
+                <div class="loading" id="loading" hidden>
+    <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <p id="loadingText">
+    Please wait, your video is being compressed...
+</p>
+</div>
+
+<button id="compressBtn">
+    Compress Video
+</button>
 
             </div>
 
@@ -172,6 +190,10 @@
 
 
     <script src="script.js"></script>
+
+   
+
+<script src="script.js"></script>
 
 </body>
 </html>

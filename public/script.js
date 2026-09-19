@@ -1,11 +1,10 @@
 const videoInput = document.getElementById("videoInput");
 const selectVideoBtn = document.getElementById("selectVideoBtn");
-
 const fileName = document.getElementById("fileName");
 const fileSize = document.getElementById("fileSize");
-
 const compressBtn = document.getElementById("compressBtn");
-
+const loading = document.getElementById("loading");
+const uploadStatus = document.getElementById("uploadStatus");
 
 // Select Video button
 selectVideoBtn.addEventListener("click", () => {
@@ -54,9 +53,11 @@ videoInput.addEventListener("change", () => {
     }
 
     // Display selected file
-    fileName.textContent = file.name;
-    fileSize.textContent =
-        "File size: " + formatFileSize(file.size);
+fileName.textContent = file.name;
+fileSize.textContent =
+    "File size: " + formatFileSize(file.size);
+
+uploadStatus.hidden = false;
 });
 
 
@@ -71,8 +72,11 @@ compressBtn.addEventListener("click", async () => {
     }
 
 
-    compressBtn.textContent = "Compressing...";
-    compressBtn.disabled = true;
+  compressBtn.textContent = "Compressing...";
+compressBtn.disabled = true;
+loading.hidden = false;
+
+uploadStatus.hidden = true;
 
 
     const formData = new FormData();
@@ -180,7 +184,7 @@ compressBtn.addEventListener("click", async () => {
         };
 
 
-        alert("Video compressed successfully!");
+        showSuccessPopup();
 
 
     } catch (error) {
@@ -195,10 +199,10 @@ compressBtn.addEventListener("click", async () => {
     }
 
 
-    compressBtn.textContent = "Compress Video";
+   compressBtn.textContent = "Compress Video";
+compressBtn.disabled = false;
 
-    compressBtn.disabled = false;
-
+loading.hidden = true;
 });
 
 
@@ -230,4 +234,57 @@ function formatFileSize(bytes) {
         + units[i]
     );
 
+}
+
+// =========================
+// SUCCESS POPUP
+// =========================
+
+function showSuccessPopup() {
+
+    const popup = document.createElement("div");
+
+    popup.className = "success-popup";
+
+    popup.innerHTML = `
+        <div class="success-popup-icon">✓</div>
+
+        <div class="success-popup-content">
+            <strong>Video compressed successfully!</strong>
+            <span>Your video is ready to preview and download.</span>
+        </div>
+
+        <button class="success-popup-close">×</button>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Show popup
+    setTimeout(() => {
+        popup.classList.add("show");
+    }, 10);
+
+    // Close button
+    popup.querySelector(".success-popup-close").addEventListener("click", () => {
+        popup.classList.remove("show");
+
+        setTimeout(() => {
+            popup.remove();
+        }, 300);
+    });
+
+    // Automatically disappear after 5 seconds
+    setTimeout(() => {
+
+        if (document.body.contains(popup)) {
+
+            popup.classList.remove("show");
+
+            setTimeout(() => {
+                popup.remove();
+            }, 300);
+
+        }
+
+    }, 5000);
 }
