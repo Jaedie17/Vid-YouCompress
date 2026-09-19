@@ -3,7 +3,34 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { spawn } = require("child_process");
+function getVideoDuration(filePath) {
+    return new Promise((resolve, reject) => {
+        const ffprobe = spawn("ffprobe", [
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            filePath
+        ]);
 
+        let output = "";
+
+        ffprobe.stdout.on("data", (data) => {
+            output += data.toString();
+        });
+
+        ffprobe.on("close", (code) => {
+            if (code !== 0) {
+                reject(new Error("Could not read video duration."));
+                return;
+            }
+
+            resolve(parseFloat(output.trim()));
+        });
+    });
+}
 const app = express();
 
 
@@ -41,7 +68,7 @@ const upload = multer({
 
 
 // Compress video
-app.post("/compress", upload.single("video"), (req, res) => {
+app.post("/compress", upload.single("video"), async (req, res) => {
 
     if (!req.file) {
 
@@ -70,23 +97,44 @@ app.post("/compress", upload.single("video"), (req, res) => {
 
 
     // FFmpeg settings
-    let videoBitrate;
+ // Get video duration
+const duration = await getVideoDuration(inputPath);
 
-    if (preset === "high") {
+let targetRatio;
+let ffmpegPreset;
+let audioBitrate;
 
-        videoBitrate = "2500k";
+if (preset === "high") {
+    targetRatio = 0.85;
+    ffmpegPreset = "veryfast";
+    audioBitrate = 128;
+} else if (preset === "fast") {
+    targetRatio = 0.55;
+    ffmpegPreset = "ultrafast";
+    audioBitrate = 96;
+} else {
+    targetRatio = 0.70;
+    ffmpegPreset = "superfast";
+    audioBitrate = 112;
+}
 
-    } else if (preset === "fast") {
+// Calculate target total bitrate based on original file size
+const originalBits = req.file.size * 8;
 
-        videoBitrate = "1000k";
+const targetTotalBitrate =
+    (originalBits * targetRatio) / duration / 1000;
 
-    } else {
+// Reserve some bitrate for audio
+const calculatedVideoBitrate =
+    Math.max(
+        100,
+        Math.floor(targetTotalBitrate - audioBitrate)
+    );
 
-        videoBitrate = "1600k";
+const videoBitrate =
+    calculatedVideoBitrate + "k";
 
-    }
-
-
+    
     // Start FFmpeg
     const ffmpeg = spawn("ffmpeg", [
 
@@ -101,15 +149,14 @@ app.post("/compress", upload.single("video"), (req, res) => {
 
         "-c:v",
         "libx264",
-
-        "-preset",
-        "veryfast",
+"-preset",
+ffmpegPreset,
 
         "-c:a",
         "aac",
 
-        "-b:a",
-        "128k",
+       "-b:a",
+audioBitrate + "k",
 
         "-y",
 
