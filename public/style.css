@@ -862,3 +862,21 @@ body {
 .success-popup-close:hover {
     color: #10dcb6;
 }
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -100px;
+}
+
+.navbar-logo {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.logo-you {
+    color: #10dcb6;
+}
