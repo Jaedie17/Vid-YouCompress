@@ -107,17 +107,23 @@ uploadStatus.hidden = true;
         });
 
 
-        const result = await response.json();
+       const contentType = response.headers.get("content-type");
 
+let result;
 
-        if (!response.ok) {
+if (contentType && contentType.includes("application/json")) {
+    result = await response.json();
+} else {
+    throw new Error(
+        "The server could not complete the compression. Please try again."
+    );
+}
 
-            throw new Error(
-                result.message || "Compression failed."
-            );
-
-        }
-
+if (!response.ok) {
+    throw new Error(
+        result.message || "Video compression failed. Please try again."
+    );
+}
 
         console.log(
             "Compression result:",
