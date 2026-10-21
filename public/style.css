@@ -887,3 +887,138 @@ body {
         margin-left: 0;
     }
 }
+
+
+/* =========================
+   DOWNLOAD SUCCESS POPUP
+   Additional styles only
+========================= */
+
+.download-popup {
+    position: fixed;
+    top: 115px;
+    right: 25px;
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 360px;
+    max-width: calc(100% - 40px);
+    padding: 16px 18px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(15, 40, 34, 0.98),
+        rgba(5, 17, 14, 0.98)
+    );
+
+    border: 1px solid rgba(16, 220, 182, 0.45);
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(0, 255, 190, 0.12);
+
+    backdrop-filter: blur(15px);
+
+    transform: translateX(120%);
+    opacity: 0;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
+}
+
+.download-popup.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.download-popup-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #10dcb6;
+    color: #03100d;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    box-shadow: 0 0 18px rgba(0, 255, 190, 0.3);
+}
+
+.download-popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex: 1;
+}
+
+.download-popup-content strong {
+    color: #f1f5f4;
+    font-size: 14px;
+}
+
+.download-popup-content span {
+    color: #91aaa3;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.compress-again-btn {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px 12px;
+
+    border: 1px solid rgba(16, 220, 182, 0.4);
+    border-radius: 8px;
+
+    background: #10dcb6;
+    color: #03100d;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.compress-again-btn:hover {
+    background: #24edc5;
+    box-shadow: 0 0 18px rgba(0, 255, 190, 0.2);
+}
+
+.download-popup-close {
+    align-self: flex-start;
+    padding: 2px 4px;
+
+    border: none;
+    background: transparent;
+    color: #7f9992;
+
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.download-popup-close:hover {
+    color: #10dcb6;
+}
+
+@media (max-width: 480px) {
+    .download-popup {
+        top: 90px;
+        right: 12px;
+        max-width: calc(100% - 24px);
+    }
+}
